@@ -14,6 +14,8 @@
     </properties>
     <modules>
         <module>rmi-demo</module>
+        <module>design-pattern</module>
+        <module>netty-demo</module>
     </modules>
 
     <dependencies>

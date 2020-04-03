@@ -2,10 +2,11 @@ package com.xxx.rmi.remote.client;
 
 
 import com.xxx.rmi.remote.IRemoteMath;
+import org.springframework.stereotype.Component;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-
+@Component
 public class MathClient {
 
     public static void main(String[] args) {
