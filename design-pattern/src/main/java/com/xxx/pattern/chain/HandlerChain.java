@@ -38,8 +38,8 @@ public class HandlerChain {
         if (index == handlers.size()) {
             return;
         }
-        Handler handler = handlers.get(index);
-        indexLocal.set(index++);
+        Handler handler = handlers.get(index++);
+        indexLocal.set(index);
         handler.handle(alarm, this);
     }
 }
