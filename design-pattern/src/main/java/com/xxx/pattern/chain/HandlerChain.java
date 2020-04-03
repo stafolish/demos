@@ -39,8 +39,7 @@ public class HandlerChain {
             return;
         }
         Handler handler = handlers.get(index);
-        index++;
-        indexLocal.set(index);
+        indexLocal.set(index++);
         handler.handle(alarm, this);
     }
 }
