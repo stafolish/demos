@@ -12,10 +12,9 @@ public class CalStrategyContext {
     @Autowired
     private List<CalPrice> calPrices = new ArrayList<CalPrice>();
 
-    public CalPrice getStrategy(Player player) {
+    public CalPrice getStrategy(long totalAmount) {
         for (CalPrice calPrice : calPrices) {
             PriceRegion priceRegion = calPrice.getClass().getDeclaredAnnotation(PriceRegion.class);
-            Long totalAmount = player.getTotalAmount();
             if (totalAmount >= priceRegion.min() && totalAmount < priceRegion.max()) {
                 return calPrice;
             }

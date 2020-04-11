@@ -16,7 +16,7 @@ public class PlayerShopService {
     private Map<String, Player> playerMap = new ConcurrentHashMap<>();
 
     public Long calPrice(Player player, Long amount) {
-        CalPrice calPrice = calStrategyContext.getStrategy(player);
+        CalPrice calPrice = calStrategyContext.getStrategy(player.getTotalAmount().get());
         return calPrice.calPrice(amount);
     }
 
@@ -24,7 +24,7 @@ public class PlayerShopService {
         Player player = getPlayer(playerId);
         Long price = calPrice(player, amount);
         System.out.println("price=" + price);
-        player.setTotalAmount(player.getTotalAmount() + price);
+        player.getTotalAmount().addAndGet(price);
         playerMap.put(playerId, player);
         return player;
     }
