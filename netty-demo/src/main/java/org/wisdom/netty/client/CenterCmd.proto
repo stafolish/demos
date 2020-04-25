@@ -1,0 +1,58 @@
+syntax = "proto2";
+
+package CenterCmd;
+
+//option optimize_for = LITE_RUNTIME;
+
+option java_package = "org.wisdom.netty.client";
+option java_outer_classname = "CenterCmd";
+
+// 获取推荐主播列表，返回：UserResult.RecommendAnchorList
+message getRecommendAnchorList { /**NO_AUTH**/
+}
+
+// 推荐主播列表
+message RecommendAnchorList {
+    repeated RecommendAnchorInfo list = 1;
+}
+
+// 推荐主播信息
+message RecommendAnchorInfo {
+    required string userId = 1; // 用户ID
+    required string nickName = 2; // 昵称
+    required int32 logoTime = 3; // 修改logo的时间 0为没修改过
+    optional string thirdIconurl = 4; // 第三方头像
+    required int32 sex = 5; // 姓别 0 未知 1:男 2:女
+    required int32 age = 6; //年龄
+    optional string roomId = 7; // 开播房间(语音或视频)
+}
+
+message Info {
+    required string errorCode = 1;
+    required string description = 2;
+}
+
+//查找信息:返回CommonResult.SearchData
+message searchUser { /**NO_AUTH**/
+     required string userId = 1; //玩家id
+     required string keyword = 2; //查找的关键字
+     required int32 start = 3; //获取起始数据
+     required int32 end = 4; //获取结束数据
+}
+
+message SearchData {
+    repeated SearchVo datas = 1;
+}
+
+message SearchVo {
+    required int32 type = 1; //数据类型:1公会;2群组;3用户
+    required string id = 2;
+    required string name = 3;
+    required int32 logoTime = 4;
+    optional string gameId = 5; //绑定的游戏id(群组)
+    optional string unionId = 6; //公会ID(群组)
+    optional bool password = 7; //是否有密码
+    optional int32 onlineNum = 8; //在线数量
+    optional int32 jobId = 9; //职位ID
+    optional int32 unionType = 10; //公会类型  2:游戏公会 3:娱乐公会
+}
