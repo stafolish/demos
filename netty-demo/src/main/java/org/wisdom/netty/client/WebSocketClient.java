@@ -126,21 +126,17 @@ public final class WebSocketClient {
 
             ch.writeAndFlush(binaryWebSocketFrame);
             BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
-            Integer uuid = 0;
+            short uuid = 0;
             while (true) {
                 String msg = console.readLine();
-                byte[] ubs = BytesUtil.intToBytes2(uuid++);
-                System.out.println("uuid=" + BytesUtil.byte2ToInt(ubs));
+                System.out.println("uuid=" + uuid);
                 if (StringUtils.isBlank(msg)) {
                     msg = "1232";
                 }
                 int protoId = Integer.parseInt(msg);
-                List<Byte> content = new LinkedList<>();
-                byte[] pb = BytesUtil.intToBytes2(protoId);
-                System.out.println("protoId=" + BytesUtil.byte2ToInt(pb));
-                byte[] pkg = new byte[ubs.length + pb.length];
-                System.arraycopy(ubs, 0, pkg, 0, ubs.length);
-                System.arraycopy(pb, 0, pkg, ubs.length, pb.length);
+                byte[] pkg = new byte[4];
+                BytesUtil.intToNetworkByteOrder(uuid, pkg, 0, 2);
+                BytesUtil.intToNetworkByteOrder(protoId, pkg, 2, 2);
 
                 if (protoId == 1232) {
                     byte[] bytes = CenterCmd.searchUser.newBuilder().setUserId("100001").setStart(1).setEnd(5).setKeyword("100007").build().toByteArray();

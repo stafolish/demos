@@ -39,19 +39,9 @@ package org.wisdom.netty.client;
 
 import com.google.protobuf.Parser;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPromise;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketClientHandshaker;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
+import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 
 import java.net.URLDecoder;
@@ -118,8 +108,8 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
         } else if (frame instanceof BinaryWebSocketFrame) {
             BinaryWebSocketFrame bwsf = (BinaryWebSocketFrame) frame;
             ByteBuf content = bwsf.content();
-            int uuid = BytesUtil.byte2ToInt(new byte[]{content.readByte(), content.readByte()});
-            int protoId = BytesUtil.byte2ToInt(new byte[]{content.readByte(), content.readByte()});
+            int uuid = BytesUtil.makeIntFromByte2(new byte[]{content.readByte(), content.readByte()});
+            int protoId = BytesUtil.makeIntFromByte2(new byte[]{content.readByte(), content.readByte()});
 
             System.out.println("uuid=" + uuid + ",protoId=" + protoId);
             // content.discardReadBytes();
